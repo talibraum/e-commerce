@@ -1,10 +1,23 @@
-const Router = require('express');
+const Router = require("express");
+import { createConnection, getRepository } from "typeorm";
+import { User } from "../models/userEntity";
+import {
+  getUsersHandeler,
+  addUsersHandeler,
+  getUserByIdHandeler,
+  deleteUserByIdHandeler,
+  updateUserByIdHandeler
+} from "../controllers/userController";
 const router = Router();
 
+router.get("/", getUsersHandeler);
 
-router.get('/', (req, res) => {
-    res.send('welcome to the users part')
-  });
+router.put("/:id",updateUserByIdHandeler);
 
+router.get("/:id", getUserByIdHandeler);
 
-module.exports=router;
+router.delete("/:id", deleteUserByIdHandeler);
+
+router.post("/", addUsersHandeler);
+
+module.exports = router;
