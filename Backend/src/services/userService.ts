@@ -1,4 +1,4 @@
-import { getRepository, createConnection } from "typeorm";
+import { getRepository } from "typeorm";
 import { User } from "../models/userEntity";
 
 const getUsers = async (): Promise<User[]> => {
