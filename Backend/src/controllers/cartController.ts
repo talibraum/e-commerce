@@ -4,6 +4,7 @@ import {
   getCarts,
   deletecartByUserId,
   addToCart,
+  deleteProductFromCart,
 } from "../services/cartService";
 import { getUserById } from "../services/userService";
 import { getProductById } from "../services/productService";
@@ -96,35 +97,36 @@ const deletecartByUserIdHandeler = async (req: Request, res: Response) => {
   }
 };
 
-// const updateUserByIdHandeler = async (req: Request, res: Response) => {
-//   try {
-//     const user = await updateUserById(Number(req.params.id), req.body);
-//     if (user) {
-//       res
-//         .status(200)
-//         .json({ message: `user with the id ${req.params.id} was updated` });
-//         Logger.info("`user with the id ${req.params.id} was updated` ");
-//     } else {
-//       res.status(404).json({ message: `user with the id ${req.params.id} was not found` });
-//       Logger.info(`user with the id ${req.params.id} was not found`);
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//     Logger.error(`${error}: ${error.message}`);
-//   }
-// };
-
-// export {
-//   getUsersHandeler,
-//   addUsersHandeler,
-//   getUserByIdHandeler,
-//   deleteUserByIdHandeler,
-//   updateUserByIdHandeler,
-// };
+const deleteProductFromCartHandeler = async (req: Request, res: Response) => {
+  try {
+    const user = await getUserById(Number(req.params.userId));
+    const product = await getProductById(Number(req.params.productId));
+    if (user && product) {
+      const cart= await deleteProductFromCart(Number(req.params.userId),Number(req.params.productId));
+      if(cart){
+        res.status(200).json({
+          message: `the product was removed from user's cart`,
+        });
+        Logger.info(`the product was removed from user's cart`);
+      }else{ res.status(404).json({
+        message: `This product does not exist in the user's cart`,
+      });
+      Logger.info(`This product does not exist in the user's cart`);}
+     
+    } else {
+      res.status(404).json({ message: `user or product was not found` });
+      Logger.info(`user or product was not found`);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    Logger.error(`${error}: ${error.message}`);
+  }
+};
 
 export {
   getCartByUserIdHandeler,
   getCartsHandeler,
   deletecartByUserIdHandeler,
-  addToCartHandeler
+  deleteProductFromCartHandeler,
+  addToCartHandeler,
 };

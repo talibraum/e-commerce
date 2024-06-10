@@ -4,6 +4,7 @@ import {
   getCartsHandeler,
   deletecartByUserIdHandeler,
   addToCartHandeler,
+  deleteProductFromCartHandeler
 } from "../controllers/cartController";
 const router = Router();
 
@@ -13,8 +14,11 @@ router.get("/:id", getCartByUserIdHandeler);
 
 router.delete("/:id", deletecartByUserIdHandeler);
 
+router.delete("/user/:userId/product/:productId", deleteProductFromCartHandeler);
+
+
 router.post(
-  "/add/user/:userId/product/:productId/:amountId",
+  "/user/:userId/product/:productId/:amountId",
   addToCartHandeler
 );
 

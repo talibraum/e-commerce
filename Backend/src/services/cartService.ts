@@ -9,7 +9,7 @@ const getCartByUserId = async (userId: number): Promise<Cart[] | undefined> => {
   const cartRepository = getRepository(Cart);
   return cartRepository.find({
     relations: {
-      user: true,
+      user: false,
       product: true,
     },
     where: {
@@ -54,5 +54,27 @@ const deletecartByUserId = async (userId: number): Promise<DeleteResult> => {
   return deleteCart;
 };
 
+const deleteProductFromCart = async (userId: number, productId: number) => {
+  const cartRepository = getRepository(Cart);
+  const cart = await cartRepository.findOne({
+    where: {
+      user: { id: userId },
+      product: { id: productId },
+    },
+  });
 
-export { getCartByUserId, getCarts, deletecartByUserId, addToCart };
+  if (cart) {
+    cartRepository.remove(cart);
+  }
+  return cart
+
+ 
+};
+
+export {
+  getCartByUserId,
+  getCarts,
+  deletecartByUserId,
+  addToCart,
+  deleteProductFromCart,
+};
