@@ -1,16 +1,20 @@
 import { Request, Response } from "express";
+import * as jwt from "jsonwebtoken";
 import {
   getUsers,
   addUser,
   getUserById,
   deleteUserById,
-  updateUserById,
+  updateUserById,login
 } from "../services/userService";
 import Logger from "../lib/logger";
 
 const getUsersHandeler = async (req: Request, res: Response) => {
   try {
     const users = await getUsers();
+    for (const user of users) {
+       user.password = jwt.sign((await user).password, "hide-passwords");
+    }
     res.status(200).json(users);
     Logger.info(`${users.length} users were found`);
   } catch (error) {
@@ -30,10 +34,29 @@ const addUsersHandeler = async (req: Request, res: Response) => {
   }
 };
 
+const loginHandeler = async (req: Request, res: Response) => {
+  try {
+    const user = await login(req.params.username,req.params.password);
+    if (user) {
+      res.status(200).json(user);
+      Logger.info(`user hass logged in `);
+    } else {
+      res.status(404).json({ message: `name or password incorect` });
+      Logger.info(`name or password incorect`);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    Logger.error(`${error}: ${error.message}`);
+  }
+};
+
+
+
 const getUserByIdHandeler = async (req: Request, res: Response) => {
   try {
     const user = await getUserById(Number(req.params.id));
     if (user) {
+      user.password= jwt.sign((await user).password, "hide-password");
       res.status(200).json(user);
       Logger.info(`user with the id ${req.params.id} was found`);
     } else {
@@ -89,4 +112,5 @@ export {
   getUserByIdHandeler,
   deleteUserByIdHandeler,
   updateUserByIdHandeler,
+  loginHandeler
 };

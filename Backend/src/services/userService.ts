@@ -1,5 +1,7 @@
 import { getRepository } from "typeorm";
 import { User } from "../models/userEntity";
+import * as jwt from "jsonwebtoken";
+
 
 const getUsers = async (): Promise<User[]> => {
   const userRepository = getRepository(User);
@@ -18,6 +20,21 @@ const getUserById = async (id: number): Promise<User | undefined> => {
       id: id,
     },
   });
+};
+
+const login = async (username: string,password:string): Promise<string | undefined> => {
+  const userRepository = getRepository(User);
+  const user = await userRepository.findOne({
+    where: {
+      username:username,
+      password:password
+    },
+  });
+  if(!user){
+    return undefined
+  }
+
+  return jwt.sign({ username: (await user).username, password: (await user).password }, "login");
 };
 
 const deleteUserById = async (id: number): Promise<User | undefined> => {
@@ -43,4 +60,4 @@ const updateUserById = async (
   return userToUpdate;
 };
 
-export { getUsers, addUser, getUserById, deleteUserById, updateUserById };
+export { getUsers, addUser, getUserById, deleteUserById, updateUserById ,login};
