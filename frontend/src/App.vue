@@ -1,12 +1,23 @@
 <template>
-  <div id="app">
+  <div class="custom-background" id="app">
+    <NavBar />
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </nav>
-    <router-view />
+    <router-view/>
   </div>
 </template>
+<script>
+import NavBar from './components/Navbar.vue'
+
+export default {
+  name: 'App',
+  components: {
+    NavBar
+  }
+}
+</script>
 
 <style>
 #app {
@@ -24,6 +35,9 @@ nav {
 nav a {
   font-weight: bold;
   color: #2c3e50;
+}
+.custom-background {
+  background-color: #FFCDD2;
 }
 
 nav a.router-link-exact-active {

@@ -15,7 +15,7 @@ const getProductsHandeler = async (req: Request, res: Response) => {
 
 const getProductsByColorHandeler = async (req: Request, res: Response) => {
     try {
-      const products = await getProductsByColor(req.params.id);
+      const products = await getProductsByColor(Number(req.params.id));
       if(products.length>0){
         res.status(200).json(products);
       Logger.info(`${products.length} products were found`);
@@ -33,7 +33,7 @@ const getProductsByColorHandeler = async (req: Request, res: Response) => {
 
   const getProductsByTypeHandeler = async (req: Request, res: Response) => {
     try {
-      const products = await getProductsByType(req.params.id);
+      const products = await getProductsByType(Number(req.params.id));
       if(products.length>0){
         res.status(200).json(products);
       Logger.info(`${products.length} products were found`);
