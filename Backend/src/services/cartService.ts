@@ -25,6 +25,10 @@ const getCarts = async (): Promise<Cart[]> => {
   return cartRepository.find({ relations: ["user", "product"] });
 };
 
+const getTotalPriceOfCart =  (carts:Cart[]): number => {
+  return carts.reduce((acc, num) => acc + num.quantity*num.product.price, 0);
+};
+
 const addToCart = async (
   userId: number,
   productId: number,
@@ -77,4 +81,5 @@ export {
   deletecartByUserId,
   addToCart,
   deleteProductFromCart,
+  getTotalPriceOfCart
 };

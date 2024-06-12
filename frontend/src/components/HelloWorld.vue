@@ -1,10 +1,8 @@
 <template>
   <div class="hello">
     <div class="container">
-      <div v-for="item in items" :key="item.name" class="row justify-content-center">
-        <div  >
-          <ProductCard :name="item.name" :image="item.image" class="col-md-4" />
-        </div>
+      <div class="row justify-content-center">
+          <ProductCard v-for="item in items" :key="item.name"  :name="item.name" :image="item.image" class="col-md-4" />
       </div>
     </div>
   </div>

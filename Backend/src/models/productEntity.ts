@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne ,OneToMany} from "typ
 import { Color } from "./colorEntity";
 import { Type } from "./typeEntity";
 import { Cart } from "./cartEntity";
+import { OrderLine } from "./orderLineEntity";
 
 @Entity("products")
 export class Product {
@@ -25,5 +26,8 @@ export class Product {
   @ManyToOne((type) => Type, (type) => type.products) type: Type;
 
   @OneToMany((type) => Cart, (cart) => cart.product) carts: Cart[];
+
+  @OneToMany((type) => OrderLine, (orderLine) => orderLine.product) orderLine: OrderLine[];
+
 
 }
