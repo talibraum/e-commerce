@@ -1,11 +1,10 @@
 <template>
   <div class="hello">
-    <div class="container ">
-      <div class="row justify-content-center">
-        <ProductCard class="col-md-4 " />
-        <ProductCard class="col-md-4" />
-        <ProductCard class="col-md-4 " />
-        <ProductCard class="col-md-4" />
+    <div class="container">
+      <div v-for="item in items" :key="item.name" class="row justify-content-center">
+        <div  >
+          <ProductCard :name="item.name" :image="item.image" class="col-md-4" />
+        </div>
       </div>
     </div>
   </div>
@@ -13,10 +12,29 @@
 
 <script>
 import ProductCard from "./ProductCard.vue";
+import { ApiService } from "@/api";
 export default {
   name: "HelloWorld",
+  data() {
+    return {
+      items: [],
+    };
+  },
   components: {
     ProductCard,
+  },
+  created() {
+     this.getProducts();
+  },
+  methods: {
+    async getProducts() {
+      try {
+        const tagsResponse = await ApiService.Products.getProducts();
+        this.items = tagsResponse.data;
+      } catch {
+        alert("לא עבד");
+      }
+    },
   },
 };
 </script>
@@ -40,6 +58,6 @@ a {
 .ProductCard {
   display: inline-block;
   /* margin: 40px 0 0;  */
-   justify-content: center;
+  justify-content: center;
 }
 </style>

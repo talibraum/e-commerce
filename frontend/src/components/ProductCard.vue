@@ -8,11 +8,11 @@
             <div class="hover_color_bubble"></div>
             <img
         class="card-img-top"
-        src="https://spca.co.il/wp-content/uploads/2021/06/%D7%92%D7%9F-%D7%97%D7%A8%D7%A6%D7%99%D7%AA-%D7%A6%D7%A2%D7%A8-%D7%91%D7%A2%D7%9C%D7%99-%D7%97%D7%99%D7%99%D7%9D-1-678x382.png"
+        :src= "image"
         alt="Card image cap"
       />
                <div class="solu_title">
-              <h3>שם מוצר</h3>
+              <h3> {{ name }}</h3>
             </div>
             <div class="solu_description">
               <p>
@@ -29,10 +29,10 @@
 <script>
 export default {
   name: "ProductCart",
+  props:['name', 'image']
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>.section_our_solution .row {
   align-items: center;
 }

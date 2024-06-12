@@ -34,10 +34,10 @@
         <form class="d-flex">
           <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button> -->
-            <a class="navbar-brand icon" 
-            > <font-awesome-icon icon="shopping-cart"
+          <a class="navbar-brand icon">
+            <font-awesome-icon icon="shopping-cart"
           /></a>
-          <a class="navbar-brand icon" 
+          <a class="navbar-brand icon"
             >התחבר <font-awesome-icon icon="circle-user"
           /></a>
         </form>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { routes } from "../router/index";
+import { routes } from "../router/router";
 export default {
   name: "NavBar",
   data() {
@@ -61,7 +61,6 @@ export default {
 .navbar-nav .nav-link {
   font-family: Arial, sans-serif;
   font-size: 16px;
-
 }
 
 .links {
