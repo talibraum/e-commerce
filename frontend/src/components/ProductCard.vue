@@ -18,18 +18,27 @@
               <p>
                 It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
               </p>
-              <button type="button" class="read_more_btn">Read More</button>
+              <button @click="openModal" type="button" class="read_more_btn">Read More</button>
             </div>
+
           </div>
           
         </div>
+
       </div>
 </template>
 
 <script>
+
 export default {
   name: "ProductCart",
-  props:['name', 'image']
+  props:['name', 'image'],
+
+  methods: {
+    openModal() {
+      this.$emit('open');
+    }
+  }
 };
 </script>
 

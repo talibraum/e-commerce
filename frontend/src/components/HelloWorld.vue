@@ -1,14 +1,27 @@
 <template>
   <div class="hello">
+    
     <div class="container">
       <div class="row justify-content-center">
-          <ProductCard v-for="item in items" :key="item.name"  :name="item.name" :image="item.image" class="col-md-4" />
+
+        <ProductCard
+       
+          v-for="item in items"
+          :key="item.name"
+          :name="item.name"
+          :image="item.image"
+          @open="openModal"
+          class="col-md-4"
+        />
       </div>
     </div>
+    <ProductModal  :isVisible="isModalVisible" @close="closeModal" />
+
   </div>
 </template>
 
 <script>
+import ProductModal from "./ProductModal.vue";
 import ProductCard from "./ProductCard.vue";
 import { ApiService } from "@/api";
 export default {
@@ -16,13 +29,16 @@ export default {
   data() {
     return {
       items: [],
+      selectedProduct: null,
+      isModalVisible: false,
     };
   },
   components: {
     ProductCard,
+    ProductModal,
   },
   created() {
-     this.getProducts();
+    this.getProducts();
   },
   methods: {
     async getProducts() {
@@ -32,6 +48,13 @@ export default {
       } catch {
         alert("לא עבד");
       }
+    },
+    openModal() {
+      // this.selectedProduct = product;
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
     },
   },
 };
@@ -55,7 +78,7 @@ a {
 }
 .ProductCard {
   display: inline-block;
-  /* margin: 40px 0 0;  */
   justify-content: center;
 }
+
 </style>
