@@ -29,7 +29,10 @@ const ApiService = {
     Order:{
         createOrder(userId){
             return axiosInstance.post(`/order/${userId}`);
-        }
+        },
+        getOrdersOfUser(userId){
+            return axiosInstance.get(`/order/${userId}`);
+        },
 
     }
 }

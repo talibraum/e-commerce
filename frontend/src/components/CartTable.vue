@@ -14,22 +14,21 @@
         <tbody>
           <tr v-for="item in items" :key="item.name">
             <td>
-              <img
-                :src="item.product.image"
-                class="card-img-top product-image"
-                alt="Product Image"
-              />
+              <img :src="item.product.image" class="card-img-top product-image" alt="Product Image" />
             </td>
             <td>{{ item.product.name }}</td>
             <td>{{ item.product.price }}$</td>
             <td>{{ item.quantity }}</td>
             <td>{{ item.product.price * item.quantity }}$</td>
-            <td @click="removeFromCart(item.product.id)"><font-awesome-icon icon="trash-can"
-                /></td>
+            <td @click="removeFromCart(item.product.id)">
+              <font-awesome-icon icon="trash-can" />
+            </td>
           </tr>
         </tbody>
       </table>
-      <button v-if="items.length > 0" type="button" class="btn btn-danger" @click="createOrder">order now</button>
+      <button v-if="items.length > 0" type="button" class="btn btn-danger" @click="createOrder">
+        Order Now
+      </button>
       <div v-else class="empty-cart-message">
         <h1>Your cart is empty</h1>
       </div>
@@ -72,14 +71,14 @@
       },
       async createOrder() {
         try {
-           await ApiService.Order.createOrder(this.userId);
-           Swal.fire({
+          await ApiService.Order.createOrder(this.userId);
+          Swal.fire({
             icon: "success",
             text: "Order created successfully",
             showConfirmButton: false,
             timer: 1500,
           });
-          await this.getCart()
+          await this.getCart();
         } catch {
           Swal.fire({
             icon: "error",
@@ -91,8 +90,8 @@
       },
       async removeFromCart(productId) {
         try {
-           await ApiService.Cart.deleteProductFromCart(this.userId,productId);
-          await this.getCart()
+          await ApiService.Cart.deleteProductFromCart(this.userId, productId);
+          await this.getCart();
         } catch {
           Swal.fire({
             icon: "error",
@@ -106,66 +105,59 @@
   };
   </script>
   
-  <style>
-  /* CSS styles for the table container */
+  <style scoped>
   .table-container {
     display: flex;
-    flex-direction: column; /* Ensure items are stacked vertically */
-    align-items: center; /* Center items horizontally */
-    justify-content: center; /* Center content vertically */
-    height: 100vh; /* Adjust as needed */
-    padding-top: 50px; /* Example padding to move the table up */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding-top: 50px;
   }
   
-  /* CSS styles for the table */
   .table {
-    width: 80%; /* Adjust the width of the table */
-    max-width: 1000px; /* Adjust the maximum width of the table */
+    width: 80%;
+    max-width: 1000px;
     border-collapse: collapse;
-    margin-bottom: 20px; /* Example margin */
-    border-radius: 10px; /* Rounder border radius */
-    overflow: hidden; /* Ensure rounded corners are visible */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+    margin-bottom: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .larger-table {
-    width: 100%; /* Ensure the table fills its container */
+    width: 100%;
   }
   
-  /* Optional: Styling for table headers, rows, cells */
   .table th,
   .table td {
-    padding: 12px; /* Example padding */
-    text-align: left; /* Example alignment */
-    border: 1px solid #ddd; /* Example border */
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
   }
   
   .table th {
-    background-color: #f2f2f2; /* Example header background color */
+    background-color: #f2f2f2;
   }
   
-  /* CSS styles for the product image */
   .product-image {
-    max-width: 150px; /* Increase maximum width of the image */
-    height: auto; /* Maintain aspect ratio */
-    display: block; /* Ensure inline-block spacing does not affect image */
-    margin: auto; /* Center the image horizontally */
-    border-radius: 8px; /* Rounder border radius */
-    overflow: hidden; /* Ensure rounded corners are visible */
+    max-width: 150px;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 8px;
+    overflow: hidden;
   }
   
-  /* Styling for the empty cart message */
   .empty-cart-message {
-    text-align: center; /* Center text horizontally */
-    margin-top: 50px; /* Example margin top */
+    text-align: center;
+    margin-top: 50px;
   }
   
   .empty-cart-message h1 {
     font-size: 5rem;
-    font-weight: bold; /* Larger font size for message */
-    margin-bottom: 20px; /* Example margin */
+    font-weight: bold;
+    margin-bottom: 20px;
   }
-  
- 
   </style>
   
