@@ -32,28 +32,50 @@
         </ul>
 
         <form class="d-flex">
-          <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button> -->
           <a class="navbar-brand icon">
             <font-awesome-icon icon="shopping-cart"
           /></a>
-          <a class="navbar-brand icon"
+          <a
+            v-if="userId === null"
+            @click="openModal()"
+            class="navbar-brand icon"
             >התחבר <font-awesome-icon icon="circle-user"
+          /></a>
+          <a v-else class="navbar-brand icon"
+            >{{ username }} <font-awesome-icon icon="circle-user"
           /></a>
         </form>
       </div>
+      <LoginModal :isVisible="isModalVisible" @close="closeModal"/>
     </div>
   </nav>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import LoginModal from "./LoginModal.vue"
 import { routes } from "../router/router";
 export default {
   name: "NavBar",
   data() {
     return {
       links: routes.filter((route) => route.name),
+      isModalVisible: false,
     };
+  },
+  components: {
+   LoginModal
+  },
+  computed: {
+    ...mapGetters(["userId", "username"]),
+  },
+  methods: {
+    openModal() {
+      this.isModalVisible = true;
+    },
+    closeModal() {
+      this.isModalVisible = false;
+    },
   },
 };
 </script>

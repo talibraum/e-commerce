@@ -5,7 +5,7 @@ import {
   addUser,
   getUserById,
   deleteUserById,
-  updateUserById,login
+  updateUserById,login,getUserByUsername
 } from "../services/userService";
 import Logger from "../lib/logger";
 
@@ -25,9 +25,17 @@ const getUsersHandeler = async (req: Request, res: Response) => {
 
 const addUsersHandeler = async (req: Request, res: Response) => {
   try {
-    const user = await addUser(req.body);
-    res.status(201).json(user);
-    Logger.info(`user was added`);
+    const userByName = await getUserByUsername((req.body).username)
+    if(!userByName){
+      const user = await addUser(req.body);
+      res.status(201).json(user);
+      Logger.info(`user was added`);
+
+    }else {
+      res.status(400).json({ message: `username already taken` });
+      Logger.info(`username already taken`);
+    }
+
   } catch (error) {
     res.status(500).json({ error: error.message });
     Logger.error(`${error}: ${error.message}`);

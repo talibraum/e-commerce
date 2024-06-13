@@ -22,7 +22,16 @@ const getUserById = async (id: number): Promise<User | undefined> => {
   });
 };
 
-const login = async (username: string,password:string): Promise<string | undefined> => {
+const getUserByUsername = async (username: string): Promise<User | undefined> => {
+  const userRepository = getRepository(User);
+  return userRepository.findOne({
+    where: {
+      username: username,
+    },
+  });
+};
+
+const login = async (username: string,password:string): Promise<User | undefined> => {
   const userRepository = getRepository(User);
   const user = await userRepository.findOne({
     where: {
@@ -30,11 +39,7 @@ const login = async (username: string,password:string): Promise<string | undefin
       password:password
     },
   });
-  if(!user){
-    return undefined
-  }
-
-  return jwt.sign({ username: (await user).username, password: (await user).password }, "login");
+  return user
 };
 
 const deleteUserById = async (id: number): Promise<User | undefined> => {
@@ -60,4 +65,4 @@ const updateUserById = async (
   return userToUpdate;
 };
 
-export { getUsers, addUser, getUserById, deleteUserById, updateUserById ,login};
+export { getUsers, addUser, getUserById, deleteUserById, updateUserById ,login ,getUserByUsername};
