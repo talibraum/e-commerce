@@ -5,14 +5,13 @@ import {
   deletecartByUserId,
   addToCart,
   deleteProductFromCart,
+  isEmptyObject
 } from "../services/cartService";
 import { getUserById } from "../services/userService";
 import { getProductById } from "../services/productService";
 import Logger from "../lib/logger";
 
-const isEmptyObject = (obj: object): boolean => {
-  return Object.entries(obj).length === 0;
-};
+
 
 const addToCartHandeler = async (req: Request, res: Response) => {
   try {

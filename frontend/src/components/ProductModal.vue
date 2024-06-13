@@ -19,7 +19,8 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text">price: {{ product.price }}$</p>
               <p class="card-text">stock: {{ product.stock }}</p>
-              <div class="qty mt-5">
+              <div class="for-users" v-if="userId!==null">
+                <div class="qty mb-5">
                 <span class="minus bg-dark" @click="decrement">-</span>
                 <input
                   type="number"
@@ -31,8 +32,9 @@
                   >+</span
                 >
               </div>
-              <button type="button" class="btn btn-danger">add to cart</button>
+              <button type="button" class="btn btn-danger" @click="addToCart(product.id)">add to cart</button>
             </div>
+              </div>
           </div>
         </transition>
       </div>
@@ -41,6 +43,9 @@
 </template>
 
 <script>
+  import Swal from "sweetalert2";
+  import { mapGetters } from "vuex";
+  import { ApiService } from "@/api";
 export default {
   name: "ProductModal",
   data() {
@@ -48,6 +53,7 @@ export default {
       amountToAdd: 1,
     };
   },
+  computed: { ...mapGetters(["userId", "username"]) },
   props: {
     product: {
       type: Object,
@@ -73,6 +79,26 @@ export default {
         this.amountToAdd--;
       }
     },
+    async addToCart(productId){
+      try {
+           await ApiService.Cart.addToCart(this.userId,productId,this.amountToAdd);
+           Swal.fire({
+            icon: "success",
+            text: "product was added to cart",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          
+        } catch {
+          Swal.fire({
+            icon: "error",
+            text: "Failed to add to cart",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+
+    }
   },
 };
 </script>

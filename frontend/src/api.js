@@ -17,6 +17,12 @@ const ApiService = {
     Cart:{
         getCartOfUser(userId){
             return axiosInstance.get(`/cart/${userId}`);
+        },
+        addToCart(userId,productId,amount){
+            return axiosInstance.post(`/cart/user/${userId}/product/${productId}/${amount}`);
+        },
+        deleteProductFromCart(userId,productId){
+            return axiosInstance.delete(`/cart/user/${userId}/product/${productId}`)
         }
 
     },

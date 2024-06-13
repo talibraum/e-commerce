@@ -8,6 +8,7 @@
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
             <th scope="col">Total</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -20,9 +21,11 @@
               />
             </td>
             <td>{{ item.product.name }}</td>
-            <td>{{ item.product.price }}</td>
+            <td>{{ item.product.price }}$</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ item.product.price * item.quantity }}</td>
+            <td>{{ item.product.price * item.quantity }}$</td>
+            <td @click="removeFromCart(item.product.id)"><font-awesome-icon icon="trash-can"
+                /></td>
           </tr>
         </tbody>
       </table>
@@ -76,7 +79,7 @@
             showConfirmButton: false,
             timer: 1500,
           });
-          
+          await this.getCart()
         } catch {
           Swal.fire({
             icon: "error",
@@ -86,9 +89,18 @@
           });
         }
       },
-      redirectToShop() {
-        // Example method to redirect to shop page or handle as needed
-        console.log("Redirecting to shop...");
+      async removeFromCart(productId) {
+        try {
+           await ApiService.Cart.deleteProductFromCart(this.userId,productId);
+          await this.getCart()
+        } catch {
+          Swal.fire({
+            icon: "error",
+            text: "Failed to remove product",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       },
     },
   };
