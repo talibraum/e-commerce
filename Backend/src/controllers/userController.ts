@@ -5,7 +5,7 @@ import {
   addUser,
   getUserById,
   deleteUserById,
-  updateUserById,login,getUserByUsername
+  updateUserById,login,getUserByUsername ,isUserValid
 } from "../services/userService";
 import Logger from "../lib/logger";
 
@@ -26,7 +26,7 @@ const getUsersHandeler = async (req: Request, res: Response) => {
 const addUsersHandeler = async (req: Request, res: Response) => {
   try {
     const userByName = await getUserByUsername((req.body).username)
-    if(!userByName){
+    if(!userByName && isUserValid(req.body)){
       const user = await addUser(req.body);
       res.status(201).json(user);
       Logger.info(`user was added`);

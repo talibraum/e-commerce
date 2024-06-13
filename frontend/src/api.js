@@ -13,6 +13,18 @@ const ApiService = {
         Register(user){
             return axiosInstance.post(`/users`,user);
         }
+    },
+    Cart:{
+        getCartOfUser(userId){
+            return axiosInstance.get(`/cart/${userId}`);
+        }
+
+    },
+    Order:{
+        createOrder(userId){
+            return axiosInstance.post(`/order/${userId}`);
+        }
+
     }
 }
 export {ApiService}

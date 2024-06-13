@@ -1,11 +1,8 @@
 <template>
   <div class="hello">
-    
     <div class="container">
       <div class="row justify-content-center">
-
         <ProductCard
-       
           v-for="item in items"
           :key="item.name"
           :name="item.name"
@@ -15,12 +12,16 @@
         />
       </div>
     </div>
-    <ProductModal :product="selectedProduct" :isVisible="isModalVisible" @close="closeModal" />
-
+    <ProductModal
+      :product="selectedProduct"
+      :isVisible="isModalVisible"
+      @close="closeModal"
+    />
   </div>
 </template>
 
 <script>
+import Swal from "sweetalert2";
 import ProductModal from "./ProductModal.vue";
 import ProductCard from "./ProductCard.vue";
 import { ApiService } from "@/api";
@@ -43,10 +44,15 @@ export default {
   methods: {
     async getProducts() {
       try {
-        const tagsResponse = await ApiService.Products.getProducts();
-        this.items = tagsResponse.data;
+        const products = await ApiService.Products.getProducts();
+        this.items = products.data;
       } catch {
-        alert("לא עבד");
+        Swal.fire({
+          icon: "error",
+          text: "failed  to load products",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     openModal(product) {
@@ -80,5 +86,4 @@ a {
   display: inline-block;
   justify-content: center;
 }
-
 </style>

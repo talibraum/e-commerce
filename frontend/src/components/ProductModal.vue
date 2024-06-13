@@ -17,7 +17,21 @@
                 <span aria-hidden="true">×</span>
               </button>
               <h5 class="card-title">{{ product.name }}</h5>
-              <p class="card-text">price:</p>
+              <p class="card-text">price: {{ product.price }}$</p>
+              <p class="card-text">stock: {{ product.stock }}</p>
+              <div class="qty mt-5">
+                <span class="minus bg-dark" @click="decrement">-</span>
+                <input
+                  type="number"
+                  class="count"
+                  name="qty"
+                  v-model.number="amountToAdd"
+                />
+                <span class="plus bg-dark" @click="increment(product.stock)"
+                  >+</span
+                >
+              </div>
+              <button type="button" class="btn btn-danger">add to cart</button>
             </div>
           </div>
         </transition>
@@ -29,6 +43,11 @@
 <script>
 export default {
   name: "ProductModal",
+  data() {
+    return {
+      amountToAdd: 1,
+    };
+  },
   props: {
     product: {
       type: Object,
@@ -42,6 +61,17 @@ export default {
   methods: {
     closeModal() {
       this.$emit("close");
+    },
+    increment(stock) {
+      if (this.amountToAdd < stock) {
+        this.amountToAdd++;
+      }
+    },
+
+    decrement() {
+      if (this.amountToAdd > 1) {
+        this.amountToAdd--;
+      }
     },
   },
 };
@@ -94,6 +124,9 @@ export default {
 .card img {
   width: 50%;
 }
+.card-text {
+  font-size: 2em;
+}
 
 .fade-enter-active,
 .fade-leave-active {
@@ -112,5 +145,66 @@ export default {
 .popup-enter, .popup-leave-to /* .popup-leave-active in <2.1.8 */ {
   transform: scale(0.9);
   opacity: 0;
+}
+.qty .count {
+  color: #000;
+  display: inline-block;
+  vertical-align: top;
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 30px;
+  padding: 0 2px;
+  min-width: 35px;
+  text-align: center;
+}
+.qty .plus {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  color: white;
+  width: 30px;
+  height: 30px;
+  font: 30px/1 Arial, sans-serif;
+  text-align: center;
+  border-radius: 50%;
+}
+.qty .minus {
+  cursor: pointer;
+  display: inline-block;
+  vertical-align: top;
+  color: white;
+  width: 30px;
+  height: 30px;
+  font: 30px/1 Arial, sans-serif;
+  text-align: center;
+  border-radius: 50%;
+  background-clip: padding-box;
+}
+div {
+  text-align: center;
+}
+.minus:hover {
+  background-color: #717fe0 !important;
+}
+.plus:hover {
+  background-color: #717fe0 !important;
+}
+/*Prevent text selection*/
+span {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+input {
+  border: 0;
+  width: 2%;
+}
+nput::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input:disabled {
+  background-color: white;
 }
 </style>

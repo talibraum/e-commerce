@@ -34,7 +34,9 @@
                     placeholder="Password"
                   />
                 </div>
-                <div class="dont-have-account" @click="openRegisterModal">don't have an account yet ? </div>
+                <div class="dont-have-account" @click="openRegisterModal">
+                  don't have an account yet ?
+                </div>
                 <button type="submit" class="btn btn-primary">Login</button>
               </form>
             </div>
@@ -42,12 +44,13 @@
         </transition>
       </div>
     </transition>
-    <RegisterModal  :isVisible="registerVisible" @close="closeRegisterModal"/>
+    <RegisterModal :isVisible="registerVisible" @close="closeRegisterModal" />
   </div>
 </template>
 
 <script>
-import RegisterModal from "./RegisterModal.vue"
+import Swal from "sweetalert2";
+import RegisterModal from "./RegisterModal.vue";
 import { mapActions } from "vuex";
 import { ApiService } from "@/api";
 export default {
@@ -67,14 +70,14 @@ export default {
     },
   },
   components: {
-    RegisterModal
+    RegisterModal,
   },
   methods: {
     closeModal() {
       this.$emit("close");
     },
     openRegisterModal() {
-        this.closeModal();
+      this.closeModal();
       this.registerVisible = true;
     },
     closeRegisterModal() {
@@ -82,7 +85,7 @@ export default {
     },
     async handleSubmit() {
       await this.userLogin(this.username, this.password);
-      
+
       this.closeModal();
     },
     async userLogin(username, password) {
@@ -91,7 +94,12 @@ export default {
         this.user = userToLog.data;
         await this.login(this.user);
       } catch {
-        alert("לא עבד");
+        Swal.fire({
+          icon: "error",
+          text: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     ...mapActions(["login"]),

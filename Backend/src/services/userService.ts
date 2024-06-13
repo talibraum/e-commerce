@@ -2,6 +2,13 @@ import { getRepository } from "typeorm";
 import { User } from "../models/userEntity";
 import * as jwt from "jsonwebtoken";
 
+const isUserValid=(user:User)=>{
+  return user.address!=='' &&
+  user.username!=='' &&
+  user.password!==''
+
+}
+
 
 const getUsers = async (): Promise<User[]> => {
   const userRepository = getRepository(User);
@@ -65,4 +72,4 @@ const updateUserById = async (
   return userToUpdate;
 };
 
-export { getUsers, addUser, getUserById, deleteUserById, updateUserById ,login ,getUserByUsername};
+export { getUsers, addUser, getUserById, deleteUserById, updateUserById ,login ,getUserByUsername ,isUserValid};

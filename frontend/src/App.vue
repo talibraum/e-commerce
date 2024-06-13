@@ -33,9 +33,9 @@ nav a {
 }
 .custom-background {
   background-color: #FFCDD2;
+  margin: 0; 
+  padding: 0; 
 }
-/* 
-nav a.router-link-exact-active {
-  color: #42b983;
-} */
+
+
 </style>

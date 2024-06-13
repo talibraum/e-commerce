@@ -32,7 +32,8 @@
         </ul>
 
         <form class="d-flex">
-          <a class="navbar-brand icon">
+          
+          <a   class="navbar-brand icon">
             <font-awesome-icon icon="shopping-cart"
           /></a>
           <a
@@ -70,6 +71,7 @@ export default {
     ...mapGetters(["userId", "username"]),
   },
   methods: {
+   
     openModal() {
       this.isModalVisible = true;
     },
