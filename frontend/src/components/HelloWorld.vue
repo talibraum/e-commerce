@@ -10,12 +10,12 @@
           :key="item.name"
           :name="item.name"
           :image="item.image"
-          @open="openModal"
+          @open="openModal(item)"
           class="col-md-4"
         />
       </div>
     </div>
-    <ProductModal  :isVisible="isModalVisible" @close="closeModal" />
+    <ProductModal :product="selectedProduct" :isVisible="isModalVisible" @close="closeModal" />
 
   </div>
 </template>
@@ -49,8 +49,8 @@ export default {
         alert("לא עבד");
       }
     },
-    openModal() {
-      // this.selectedProduct = product;
+    openModal(product) {
+      this.selectedProduct = product;
       this.isModalVisible = true;
     },
     closeModal() {
