@@ -2,7 +2,8 @@
     <div class="list-container">
       <ul class="list-group list-group-horizontal-md">
         <li class="list-group-item" v-for="item in items" :key="item.id"
-        @click="selectType(item.id)">
+        @click="selectType(item.id)"
+        :class="{ 'selectedType': item.id===selectedType }">
           {{ item.name }}
         </li>
       </ul>
@@ -20,6 +21,7 @@
         items: [],
       };
     },
+    props:['selectedType'],
     created() {
       this.getTypes();
     },
@@ -64,6 +66,11 @@
   
   .list-group-item:hover {
     transform: scale(1.1);
+  }
+  .selectedType{
+    background-color: #5f0c39 !important;
+    color: #ffffff;
+  font-size: 17px !important;
   }
   </style>
   

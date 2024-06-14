@@ -8,8 +8,8 @@
       <font-awesome-icon :icon="['fas', 'undo']" />
     </a>
     <div class="d-flex justify-content-center">
-      <ColorList @selectColor="selectColor" class="mr-3" />
-      <TypesList @selectType="selectType" class="ml-3" />
+      <ColorList @selectColor="selectColor" class="mr-3" :selectedColor="selectedColor"/>
+      <TypesList @selectType="selectType" class="ml-3" :selectedType="selectedType" />
     </div>
     <div class="container">
       <div class="row justify-content-center">
