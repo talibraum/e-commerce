@@ -22,7 +22,6 @@
           @open="openModal(item)"
           class="col-md-4"
         />
-        
       </div>
     </div>
     <ProductModal
@@ -30,8 +29,8 @@
       :isVisible="isModalVisible"
       @close="closeModal"
     />
-    <div v-if="filteredItems.length===0" class="empty-cart-message">
-      <h1>product not found </h1>
+    <div v-if="items.length > 0 && filteredItems.length === 0" class="empty-cart-message">
+      <h1>Product not found</h1>
     </div>
   </div>
 </template>
