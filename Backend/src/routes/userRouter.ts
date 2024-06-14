@@ -6,7 +6,7 @@ import {
   getUserByIdHandeler,
   deleteUserByIdHandeler,
   updateUserByIdHandeler,
-  loginHandeler
+  loginHandeler,
 } from "../controllers/userController";
 const router = Router();
 
@@ -16,7 +16,6 @@ router.put("/:id", updateUserByIdHandeler);
 
 router.get("/:id", getUserByIdHandeler);
 router.get("/login/:username/password/:password", loginHandeler);
-
 
 router.delete("/:id", deleteUserByIdHandeler);
 

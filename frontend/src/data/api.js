@@ -41,5 +41,10 @@ const ApiService = {
       return axiosInstance.get(`/order/${userId}`);
     },
   },
+  Review:{
+    createReview(review){
+        return axiosInstance.post(`/review`,review);
+      },
+  }
 };
 export { ApiService };
