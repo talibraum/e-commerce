@@ -28,9 +28,17 @@ const store = new Vuex.Store({
   actions: {
     login({ commit }, user) {
       commit('SET_USER', { ...user});
+      localStorage.setItem('user', JSON.stringify(user));
     },
     logout({ commit }) {
       commit('CLEAR_USER');
+      localStorage.removeItem('user');
+    },
+    initializeUser({ commit }) {
+      const user = localStorage.getItem('user');
+      if (user) {
+        commit('SET_USER', JSON.parse(user));
+      }
     },
   },
   getters: {

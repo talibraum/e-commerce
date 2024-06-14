@@ -56,7 +56,7 @@
 <script>
 import Swal from "sweetalert2";
 import { mapActions } from "vuex";
-import { ApiService } from "@/api";
+import { ApiService } from "@/data/api";
 
 export default {
   name: "RegisterModal",
@@ -87,7 +87,7 @@ export default {
     },
 
     async handleSubmit() {
-      await this.userRegister(this.creatUser()); 
+      await this.userRegister(this.creatUser());
 
       this.closeModal();
     },
@@ -98,11 +98,11 @@ export default {
         await this.login(this.user);
       } catch (error) {
         Swal.fire({
-  icon: "error",
-  text: "Something went wrong!",
-  showConfirmButton: false,
-  timer: 1500
-});
+          icon: "error",
+          text: "Something went wrong!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     ...mapActions(["login"]),

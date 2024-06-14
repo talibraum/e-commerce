@@ -11,6 +11,7 @@ library.add(fas);
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 
 Vue.config.productionTip = false;
+store.dispatch('initializeUser');
 
 new Vue({
   router,

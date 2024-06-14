@@ -52,7 +52,7 @@
 import Swal from "sweetalert2";
 import RegisterModal from "./RegisterModal.vue";
 import { mapActions } from "vuex";
-import { ApiService } from "@/api";
+import { ApiService } from "@/data/api";
 export default {
   name: "LoginModal",
   data() {

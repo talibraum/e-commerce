@@ -16,7 +16,7 @@
             </div>
             <div class="solu_description">
               <p>
-                It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+                ${{ price }}
               </p>
               <button @click="openModal" type="button" class="read_more_btn">Read More</button>
             </div>
@@ -32,7 +32,7 @@
 
 export default {
   name: "ProductCart",
-  props:['name', 'image'],
+  props:['name', 'image','price'],
 
   methods: {
     openModal() {

@@ -19,22 +19,28 @@
               <h5 class="card-title">{{ product.name }}</h5>
               <p class="card-text">price: {{ product.price }}$</p>
               <p class="card-text">stock: {{ product.stock }}</p>
-              <div class="for-users" v-if="userId!==null">
+              <div class="for-users" v-if="userId !== null">
                 <div class="qty mb-5">
-                <span class="minus bg-dark" @click="decrement">-</span>
-                <input
-                  type="number"
-                  class="count"
-                  name="qty"
-                  v-model.number="amountToAdd"
-                />
-                <span class="plus bg-dark" @click="increment(product.stock)"
-                  >+</span
+                  <span class="minus bg-dark" @click="decrement">-</span>
+                  <input
+                    type="number"
+                    class="count"
+                    name="qty"
+                    v-model.number="amountToAdd"
+                  />
+                  <span class="plus bg-dark" @click="increment(product.stock)"
+                    >+</span
+                  >
+                </div>
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                  @click="addToCart(product.id)"
                 >
+                  add to cart
+                </button>
               </div>
-              <button type="button" class="btn btn-danger" @click="addToCart(product.id)">add to cart</button>
             </div>
-              </div>
           </div>
         </transition>
       </div>
@@ -43,9 +49,9 @@
 </template>
 
 <script>
-  import Swal from "sweetalert2";
-  import { mapGetters } from "vuex";
-  import { ApiService } from "@/api";
+import Swal from "sweetalert2";
+import { mapGetters } from "vuex";
+import { ApiService } from "@/data/api";
 export default {
   name: "ProductModal",
   data() {
@@ -67,6 +73,7 @@ export default {
   methods: {
     closeModal() {
       this.$emit("close");
+      this.amountToAdd = 1;
     },
     increment(stock) {
       if (this.amountToAdd < stock) {
@@ -79,26 +86,28 @@ export default {
         this.amountToAdd--;
       }
     },
-    async addToCart(productId){
+    async addToCart(productId) {
       try {
-           await ApiService.Cart.addToCart(this.userId,productId,this.amountToAdd);
-           Swal.fire({
-            icon: "success",
-            text: "product was added to cart",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-          
-        } catch {
-          Swal.fire({
-            icon: "error",
-            text: "Failed to add to cart",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-
-    }
+        await ApiService.Cart.addToCart(
+          this.userId,
+          productId,
+          this.amountToAdd
+        );
+        Swal.fire({
+          icon: "success",
+          text: "product was added to cart",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      } catch {
+        Swal.fire({
+          icon: "error",
+          text: "Failed to add to cart",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    },
   },
 };
 </script>

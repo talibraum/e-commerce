@@ -4,6 +4,7 @@
       <img
         class="logo-pic"
         src="https://icons.veryicon.com/png/o/miscellaneous/ios-icon-library/diamond-diamond.png"
+        alt="Logo"
       />
       <a class="navbar-brand" href="#">EXPENSIVE JEWELRY</a>
       <button
@@ -19,68 +20,83 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="links navbar-nav me-auto mb-2 mb-lg-0">
-          <li v-for="link in links" :key="link.name" class="nav-item">
+          <li v-for="link in filteredLinks" :key="link.name" class="nav-item">
             <router-link
               class="nav-link"
               :to="link.path"
               active-class="active-link"
               exact-active-class="exact-active-link"
             >
-              {{ link.name }}</router-link
-            >
+              <font-awesome-icon :icon="link.icon" class="navbar-icon icon" />
+            </router-link>
           </li>
         </ul>
 
         <form class="d-flex">
-          
-          <a   class="navbar-brand icon">
-            <font-awesome-icon icon="shopping-cart"
-          /></a>
           <a
             v-if="userId === null"
-            @click="openModal()"
+            @click.prevent="openLoginModal"
             class="navbar-brand icon"
-            >התחבר <font-awesome-icon icon="circle-user"
-          /></a>
-          <a v-else class="navbar-brand icon"
-            >{{ username }} <font-awesome-icon icon="circle-user"
-          /></a>
+          >
+            התחבר <font-awesome-icon :icon="['fas', 'circle-user']" />
+          </a>
+          <a v-else class="navbar-brand icon" @click.prevent="openUserModal">
+            {{ username }} <font-awesome-icon :icon="['fas', 'circle-user']" />
+          </a>
         </form>
       </div>
-      <LoginModal :isVisible="isModalVisible" @close="closeModal"/>
+      <LoginModal :isVisible="isLoginModalVisible" @close="closeLoginModal" />
+      <UserModal :isVisible="isUserModalVisible" @close="closeUserModal" />
+
     </div>
   </nav>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import LoginModal from "./LoginModal.vue"
+import LoginModal from "./LoginModal.vue";
+import UserModal from "./UserModal.vue";
 import { routes } from "../router/router";
+
 export default {
   name: "NavBar",
   data() {
     return {
-      links: routes.filter((route) => route.name),
-      isModalVisible: false,
+      links: routes,
+      isLoginModalVisible: false,
+      isUserModalVisible: false,
+
     };
   },
   components: {
-   LoginModal
+    LoginModal,
+    UserModal
   },
   computed: {
     ...mapGetters(["userId", "username"]),
+    filteredLinks() {
+      return this.links.filter(
+        (link) => !link.RequiresUserLogin || this.userId !== null
+      );
+    },
   },
   methods: {
-   
-    openModal() {
-      this.isModalVisible = true;
+    openLoginModal() {
+      this.isLoginModalVisible = true;
     },
-    closeModal() {
-      this.isModalVisible = false;
+    closeLoginModal() {
+      this.isLoginModalVisible = false;
+    },
+    openUserModal() {
+      this.isUserModalVisible = true;
+    },
+    closeUserModal() {
+      this.isUserModalVisible = false;
     },
   },
 };
 </script>
+
 <style>
 .navbar-nav .nav-link {
   font-family: Arial, sans-serif;
@@ -91,13 +107,24 @@ export default {
   justify-content: center;
   width: 100%;
 }
+
+.nav-item {
+  margin-right: 15px; 
+}
+
 .icon {
   font-size: 16px;
 }
+
 .logo-pic {
   width: 2.5em;
   height: 2.5em;
 }
+
+.navbar-icon {
+  font-size: 2em;
+}
+
 .exact-active-link {
   color: #5f0c39 !important;
   font-size: 17px !important;

@@ -8,9 +8,14 @@ import {
   deleteproductByIdHandeler,
   updateProductByIdHandeler
 } from "../controllers/productController";
+import { getAllTypesHandeler } from "../controllers/typeController";
+import { getAllColorsHandeler } from "../controllers/colorController";
 const router = Router();
 
 router.get("/", getProductsHandeler);
+router.get("/types", getAllTypesHandeler);
+router.get("/colors", getAllColorsHandeler);
+
 
 router.get("/color/:id", getProductsByColorHandeler);
 

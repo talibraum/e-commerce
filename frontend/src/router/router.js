@@ -10,17 +10,25 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    icon: 'fa-home',
+    RequiresUserLogin:false
+
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import( '../views/OrdersView.vue')
+    path: '/order',
+    name: 'orders',
+    component: () => import( '../views/OrdersView.vue'),
+     icon: 'fas fa-file-alt' ,
+     RequiresUserLogin:true
+
   },
   {
     path: '/cart',
     name: 'cart',
-    component:CartView
+    component:CartView,
+    icon: 'shopping-cart',
+    RequiresUserLogin:true
   }
 ]
 
