@@ -28,6 +28,7 @@ const addUsersHandeler = async (req: Request, res: Response) => {
     const userByName = await getUserByUsername((req.body).username)
     if(!userByName && isUserValid(req.body)){
       const user = await addUser(req.body);
+      user.password = jwt.sign((await user).password, "hide-passwords");
       res.status(201).json(user);
       Logger.info(`user was added`);
 
