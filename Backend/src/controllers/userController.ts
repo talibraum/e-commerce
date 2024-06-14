@@ -46,6 +46,7 @@ const loginHandeler = async (req: Request, res: Response) => {
   try {
     const user = await login(req.params.username,req.params.password);
     if (user) {
+      user.password = jwt.sign((await user).password, "hide-passwords");
       res.status(200).json(user);
       Logger.info(`user hass logged in `);
     } else {
