@@ -179,7 +179,6 @@ export default {
   object-fit: contain;
 }
 
-/*start media query*/
 @media screen and (min-width: 320px) {
   .sol_card_top_3 {
     position: relative;

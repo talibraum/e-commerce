@@ -172,12 +172,11 @@ export default {
   opacity: 0;
 }
 
-/* Popup transition styles for the modal content */
 .popup-enter-active,
 .popup-leave-active {
   transition: transform 0.3s, opacity 0.3s;
 }
-.popup-enter, .popup-leave-to /* .popup-leave-active in <2.1.8 */ {
+.popup-enter, .popup-leave-to {
   transform: scale(0.9);
   opacity: 0;
 }
@@ -224,7 +223,6 @@ div {
 .plus:hover {
   background-color: #717fe0 !important;
 }
-/*Prevent text selection*/
 span {
   -webkit-user-select: none;
   -moz-user-select: none;
