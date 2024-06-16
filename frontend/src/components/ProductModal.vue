@@ -86,8 +86,10 @@ export default {
         this.amountToAdd--;
       }
     },
+     /* eslint-disable */ 
     async addToCart(productId) {
       try {
+       
         await ApiService.Cart.addToCart(
           this.userId,
           productId,
@@ -99,6 +101,7 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
+        this.product.stock=this.product.stock-this.amountToAdd;
       } catch {
         Swal.fire({
           icon: "error",
