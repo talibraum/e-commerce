@@ -89,8 +89,8 @@ export default {
      /* eslint-disable */ 
     async addToCart(productId) {
       try {
-       
-        await ApiService.Cart.addToCart(
+        if(this.product.stock>0){
+          await ApiService.Cart.addToCart(
           this.userId,
           productId,
           this.amountToAdd
@@ -102,6 +102,18 @@ export default {
           timer: 1500,
         });
         this.product.stock=this.product.stock-this.amountToAdd;
+
+        }
+        else{
+          Swal.fire({
+          icon: "error",
+          text: "the product is out of stock",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        }
+       
+        
       } catch {
         Swal.fire({
           icon: "error",
