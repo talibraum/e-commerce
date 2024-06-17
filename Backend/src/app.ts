@@ -37,7 +37,7 @@ app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
-app.use("/review", reviewRouter);
+app.use("/reviews", reviewRouter);
 
 createConnection().then(() => {
   app.listen(port, () => {

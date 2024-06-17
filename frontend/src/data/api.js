@@ -43,7 +43,7 @@ const ApiService = {
   },
   Review:{
     createReview(review){
-        return axiosInstance.post(`/review`,review);
+        return axiosInstance.post(`/reviews`,review);
       },
   }
 };
